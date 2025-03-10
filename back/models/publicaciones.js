@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const publicacionesSchema = new Schema(
     {
-        autor_id: {
+        autorID: {
             type: String,
             required: true
         },
@@ -9,7 +9,7 @@ const publicacionesSchema = new Schema(
             type: String,
             required: true
         },
-        sub_titulo: {
+        subTitulo: {
             type: String,
             required: true
         },
@@ -21,11 +21,11 @@ const publicacionesSchema = new Schema(
             type: String,
             required: true
         },
-        imagen: {
+        imagenRuta: {
             type: String,
             default: "",
         },
-        fecha_publicacion: {
+        fechaPublicacion: {
             type: String,
             required: true
         },

@@ -1,19 +1,19 @@
 const {Schema, model} = require('mongoose');
 const comentarioSchema = new Schema(
     {
-        post_id:{
+        postID:{
             type: String,
             required: true
         },
-        usuario_id:{
+        usuarioID:{
             type: String,
             required: true
         },
-        contenido_comentario:{
+        contenidoComentario:{
             type: String,
             required: true
         },
-        fecha_comentario:{
+        fechaComentario:{
             type: String,
             required: true
         },
