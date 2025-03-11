@@ -1,16 +1,15 @@
-const api = "http://127.0.0.1:4000/api/publicaciones/"; // nos conectamos a la API
-// nos conectamos a la API
+const api = "http://127.0.0.1:4000/api/publicaciones/";
 const sesion = JSON.parse(sessionStorage.getItem("userName"));
 let nameUser = document.querySelector("#nameUser");
 let btnCerrarSesion = document.querySelector("#btnCerrarSesion");
-let autor_id = sesion.user_id;
+let autorID = sesion.user_id;
 let titulo = document.querySelector("#postTitle");
-let sub_titulo = document.querySelector("#postSubTitle");
+let subTitulo = document.querySelector("#postSubTitle");
 let categories = document.querySelector("#categories");
 let image = document.querySelector("#postImage");
 let contenido = document.querySelector("#postContent");
 let idPost = 0;
-// cerrar sesion
+// CERRAR SESION
 btnCerrarSesion.addEventListener("click", (e) => {
   if (!localStorage.getItem("userName")) {
     sessionStorage.clear();
@@ -18,7 +17,7 @@ btnCerrarSesion.addEventListener("click", (e) => {
     history.replaceState(null, null, window.location.href);
   }
 });
-// Botones eliminar y editar
+// ELIMINAT
 document.addEventListener("click", (e) => {
   try {
     let action = e.target.closest("button").getAttribute("data-action");
@@ -63,6 +62,7 @@ document.addEventListener("click", (e) => {
           }
         });
         break;
+// EDITAR
       case "edit":
         idPost = e.target.closest("button").getAttribute("data-id");
         fetch(api + "listarPublicId/" + idPost, {
@@ -94,29 +94,27 @@ document.addEventListener("click", (e) => {
   } catch (error) {}
 });
 
-// FORMULARIO DE LA PUBLICACION O POST
+// FORMULARIO DEL POST
 document.getElementById("frmPost").addEventListener("submit", (e) => {
   e.preventDefault();
   let action = document.querySelector("#btnGuardar").getAttribute("data-action");
   const frmPost = new FormData(); 
   const fecha = new Date();
   const options = {
-    year: "numeric", // Año
-    month: "long", // Mes
-    day: "numeric" // Dia
+    year: "numeric",
+    month: "long",
+    day: "numeric"
   };
   const fechaPublicacion = fecha.toLocaleDateString(undefined, options);
-
   switch (action) {
     case "public-post":
-      frmPost.append("autor_id", sesion.user_id);
+      frmPost.append("autorID", sesion.user_id);
       frmPost.append("titulo", document.querySelector("#postTitle").value);
-      frmPost.append("sub_titulo", document.querySelector("#postSubTitle").value);
-      frmPost.append("rutImagen", document.querySelector("#postImage").files[0]); // Asegúrate de que image es un input de tipo "file"
+      frmPost.append("subTitulo", document.querySelector("#postSubTitle").value);
+      frmPost.append("imagenRuta", document.querySelector("#postImage").files[0]);
       frmPost.append("categoria", document.querySelector("#categories").value);
-      frmPost.append("contenido_publicacion", document.querySelector("#postContent").value);
-      frmPost.append("fecha_publicacion", fechaPublicacion);
-
+      frmPost.append("contenidoPublicacion", document.querySelector("#postContent").value);
+      frmPost.append("fechaPublicacion", fechaPublicacion);
       fetch(api + "nuevaPublicacion/", {
         method: "POST",
         body: frmPost
@@ -151,11 +149,11 @@ document.getElementById("frmPost").addEventListener("submit", (e) => {
       break;
     case "save-changes-post":
       frmPost.append("titulo", document.querySelector("#postTitle").value);
-      frmPost.append("sub_titulo", document.querySelector("#postSubTitle").value);
-      frmPost.append("rutImagen", document.querySelector("#postImage").files[0]); // Asegúrate de que image es un input de tipo "file"
+      frmPost.append("subTitulo", document.querySelector("#postSubTitle").value);
+      frmPost.append("imagenRuta", document.querySelector("#postImage").files[0]); // Asegúrate de que image es un input de tipo "file"
       frmPost.append("categoria", document.querySelector("#categories").value);
-      frmPost.append("contenido_publicacion", document.querySelector("#postContent").value);
-      fetch(api + "actualizarPorId/" + idPost, {
+      frmPost.append("contenidoPublicacion", document.querySelector("#postContent").value);
+      fetch(api + "actualizarPorID/" + idPost, {
         method: "PUT",
         body: frmPost
       })
