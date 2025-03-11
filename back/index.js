@@ -1,0 +1,14 @@
+const express = require('express');
+const app = express();
+const cors = require('cors');
+app.use(cors());
+app.use(express.json());
+const cnn = require('./models/bd_conexion.js');
+cnn();
+const comentariosRuta = require('./routes/comentarios.js');
+const publicacionesRuta = require('./routes/publicaciones.js');
+const UsuarioRuta = require('./routes/usuarios.js');
+app.use('/api', comentariosRuta);
+app.use('/api', publicacionesRuta);
+app.use('/api', UsuarioRuta);
+app.listen(4000, () => { console.log('Servidor en puerto 3000');});
